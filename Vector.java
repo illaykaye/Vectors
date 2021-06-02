@@ -2,19 +2,19 @@ package Vectores;
 
 public class Vector {
 
-    private final int[] vector;
+    private final double[] vector;
 
-    public Vector(int[] vector) {
+    public Vector(double[] vector) {
         this.vector = vector;
     }
 
-    public int[] get_v() {
+    public double[] get_v() {
         return this.vector;
     }
 
     //Add 2 vectors together
     public Vector add_v_v(Vector v) {
-        int[] v1 = new int[this.vector.length];
+        double[] v1 = new double[this.vector.length];
 
         for (int i = 0; i < this.vector.length; i++) {
             v1[i] = this.vector[i] + v.vector[i];
@@ -24,7 +24,7 @@ public class Vector {
 
     //Multiply a vector by scalar
     public Vector mul_s(int num) {
-        int[] v1 = new int[this.vector.length];
+        double[] v1 = new double[this.vector.length];
 
         for (int i = 0; i < this.vector.length; i++) {
             v1[i] = this.vector[i] * num;
@@ -44,7 +44,13 @@ public class Vector {
 
     //Cross product of 2 vectors
     public Vector cross_product(Vector v) {
-        int[] v1 = new int[v.vector.length];
+        Matrix m = new Matrix(new double[][]{this.get_v(), v.get_v()});
+        m = m.gaussian_elim();
+        double[] v1 = new double[v.vector.length];
+
+        for (int i = 0; i < m.get_matrix().length; i++) {
+            v1[i] = 1;
+        }
 
         return new Vector(v1);
     }
@@ -52,7 +58,7 @@ public class Vector {
     public String toString() {
         StringBuilder v = new StringBuilder();
 
-        for (int i : this.vector) {
+        for (double i : this.vector) {
             v.append(String.format("%d\n", i));
         }
         return v.toString();
